@@ -8,14 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var usedWords = [String]()
+    @State private var newWord: String = ""
+    @State private var rootWord: String = ""
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                Section {
+                    TextField("Enter your word", text: $newWord)
+                        .textInputAutocapitalization(.never)
+                }
+                
+                Section {
+                    ForEach(usedWords, id:  \.self){word in
+                        HStack {
+                            Image(systemName: "\(word.count).circle")
+                            Text(word)}
+                        }
+                }
+            }
         }
-        .padding()
+        .navigationTitle(rootWord)
+        .onSubmit (addNewWord)
+    }
+    
+    func addNewWord() {
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !answer.isEmpty else { return }
+        
+        withAnimation{
+            usedWords.insert(answer, at: 0)
+        }
+        newWord = ""
     }
 }
 
