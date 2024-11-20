@@ -29,9 +29,22 @@
 		6479124C2CEBB43D009860D7 /* WordsScrambleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordsScrambleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		64ED57B02CED7552008D9370 /* Exceptions for "WordsScramble" folder in "WordsScrambleUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				start.txt,
+			);
+			target = 6479124B2CEBB43D009860D7 /* WordsScrambleUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		647912342CEBB43C009860D7 /* WordsScramble */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				64ED57B02CED7552008D9370 /* Exceptions for "WordsScramble" folder in "WordsScrambleUITests" target */,
+			);
 			path = WordsScramble;
 			sourceTree = "<group>";
 		};
