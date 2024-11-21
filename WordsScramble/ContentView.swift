@@ -9,6 +9,8 @@ struct ContentView: View {
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
     
+    @State private var score: Int = 0
+    
     var body: some View {
         NavigationStack {
             List {
@@ -29,6 +31,19 @@ struct ContentView: View {
             .navigationTitle(rootWord)
             .onSubmit(addNewWord)
             .onAppear(perform: startGame)
+            .toolbar {
+                
+               ToolbarItem(placement: .navigationBarLeading) {
+                   Text("Score: \(score)")
+               }
+                
+                ToolbarItem(placement: .navigationBarTrailing){
+                    Button("Restart") {
+                        startGame()
+                    }
+                }
+            
+            }
             .alert(errorTitle, isPresented: $showError) {
                 Button("OK", role: .cancel) { }
             } message: {
@@ -40,7 +55,17 @@ struct ContentView: View {
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         guard !answer.isEmpty else { return }
-
+        
+        guard answer.count >= 3 else {
+            wordError(title: "Word too short", message: "Word must be more thant 3 characters.")
+            return
+        }
+        
+        guard answer != rootWord else {
+            wordError(title: "Answer Cannot Be Same", message: "Answer cannot be same as root word.")
+            return
+        }
+        
         guard isOriginal(word: answer) else {
             wordError(title: "Word Used Already", message: "Be more original!")
             return
@@ -59,6 +84,8 @@ struct ContentView: View {
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
+        
+        score += 1
         newWord = ""
     }
     
@@ -72,6 +99,10 @@ struct ContentView: View {
             rootWord = "No Words"
             print("Couldn't load start words. Falling back to default.")
         }
+        
+        newWord = ""
+        usedWords.removeAll()
+        score = 0
     }
 
     func isOriginal(word: String) -> Bool {
@@ -87,6 +118,7 @@ struct ContentView: View {
                 return false
             }
         }
+        
         return true
     }
 
